@@ -9,6 +9,7 @@
   <!-- 注意：项目正式环境请勿引用该地址 -->
   <link href="/js/layui/css/layui.css" rel="stylesheet">
   <script type="text/javascript" src="/js/jquery/jquery.js"></script>
+  <script type="text/javascript" src="/js/json2.js"></script>
   <script type="text/javascript" src="/js/util.js"></script>
 </head>
 <body>
@@ -146,10 +147,7 @@
 		var url= "/report/create";
 		var obj={};
 		debugger
-		obj.info = JSON.stringify(data.field);
-		//var flowRecordInfo = buildFlowOpinion();
-		//obj.flowRecordInfo = JSON2.stringify(flowRecordInfo);
-		//layerCommonUtil.loading();
+		obj.info = JSON2.stringify(data.field);
 		ajaxPost(url,obj,function(msg){
 			layerCommonUtil.closeLoading();
 			if(msg.errorMsg){

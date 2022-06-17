@@ -28,6 +28,7 @@ server:
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件
 mybatis:  
+  config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapping/*xml
   type-aliases-package: com.bgp.report.entity  #指定Mybatis的实体目录
 

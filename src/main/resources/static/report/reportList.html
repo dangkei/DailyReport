@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>在线测试</title>
-  <link href="/layui/css/layui.css" rel="stylesheet">
+  <title>日报查询</title>
+  <link href="/js/layui/css/layui.css" rel="stylesheet">
   <style>
     body{padding: 6px 16px;}
     .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
@@ -12,7 +12,7 @@
 </head>
 <body>
  
-<table class="layui-hide" id="userTable" lay-filter="test"></table>
+<table class="layui-hide" id="reportTbl" lay-filter="test"></table>
 <div id="userPaging"></div>
 
 <script type="text/html" id="barDemo">
@@ -63,7 +63,7 @@
 
 
   
-<script src="/layui/layui.js"></script>
+<script src="/js/layui/layui.js"></script>
 <script>
 //加载模块  
 layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate'], callback)
@@ -91,9 +91,9 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
   
   //执行一个 table 实例
   table.render({
-    elem: '#userTable'
+    elem: '#reportTbl'
     ,height:  540
-    ,url: '/user/getUserListByPage' //数据接口（此处为静态数据，仅作演示）
+    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
     ,title: '用户表'
     ,page: true //开启分页
     ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -101,12 +101,12 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
     ,cols: [[ //表头
       {type: 'checkbox', fixed: 'left'}
       ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-      ,{field: 'userName', title: '登录名', width:80}
-      ,{field: 'realName', title: '姓名', width: 90, sort: true, totalRow: true}
-      ,{field: 'realName', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'realName', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'realName', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'passWord', title: '密码', width: 90, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '报告日期', width:80}
+      ,{field: 'reportDate', title: '姓名', width: 90, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '密码', width: 90, sort: true, totalRow: true}
       ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
     ]]
   });

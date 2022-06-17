@@ -10,28 +10,28 @@
     </resultMap>
     
     <insert id="insert">
-    	INSERT INTO dailyreport (<include refid="columns"></include>)
+    	INSERT INTO tb_DailyReport (<include refid="columns"></include>)
     VALUES (#{reportDate}, #{sqkm}, #{sqkmWeek}, #{dtTime}, #{paySB}, #{noPaySB}, #{captureTime}, #{dailyIn}, #{weeklyIn}, #{remark})
     </insert>
      
 	<select id="getReportList" resultType="com.bgp.report.entity.DailyReport">
-        select <include refid="columns"></include> from report 
+        select <include refid="columns"></include> from tb_DailyReport 
     </select>
     
     <select id="count" parameterType="com.bgp.report.entity.DailyReport" resultType="int" >
-        select count(*) from dailyreport 
+        select count(*) from tb_DailyReport 
         <where>
     	<if test="reportDate != null and !&quot;&quot;.equals(reportDate.trim())">
-	    	and reportDate = '#{reportDate}'
+	    	and report_Date = '#{reportDate}'
 	    </if>
 	    <if test="sqkm != null and !&quot;&quot;.equals(sqkm.trim())">
-	    	and sqkm like '#{sqkm}'
+	    	and sqkm =  '#{sqkm}'
 	    </if>
     </where>
     </select>
     
     <select id="getReportListByPage" parameterType="java.util.Map"  resultType="com.bgp.report.entity.DailyReport">
-        select * from dailyreport 
+        select * from tb_DailyReport 
     </select>
     
     <sql id="columns">report_date, sqkm, sqkm_week, dt_time,pay_sb,nopay_sb,capture_time,daily_in,weekly_in,remark</sql>

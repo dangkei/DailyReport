@@ -11,6 +11,8 @@ public interface DailyReportMapper {
 
 	 int insert(DailyReport report);
 	
+	 int count(DailyReport report);
+	 
 	 List<DailyReport>  getReportList();
 	
 	 List<DailyReport>  getReportListByPage(int page, int limit);
