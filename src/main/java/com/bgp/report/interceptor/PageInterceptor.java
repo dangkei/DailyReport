@@ -56,8 +56,8 @@ public class PageInterceptor implements Interceptor {
 
 		if(method.matches(".+ByPage$")){
 			Map<?,?> params = (Map<?,?>)boundSql.getParameterObject();
-			int page = (int)params.get("page");
-			int limit = (int)params.get("limit");
+			int page = (int)params.get("param1");
+			int limit = (int)params.get("param2");
 			// 改造后带分页查询的SQL语句
 			String pageSql = sql + " limit " + (page-1)*limit + "," + limit;
 			metaObject.setValue("delegate.boundSql.sql", pageSql);

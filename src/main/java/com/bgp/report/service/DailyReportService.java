@@ -1,5 +1,7 @@
 package com.bgp.report.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class DailyReportService {
 	
 	public int insert(DailyReport report) {
 		return reportMapper.insert(report);
+	}
+	
+	public List<DailyReport> getReportList(int page,int limit){
+		return reportMapper.getReportList();
 	}
 	
 	public DataTable getReportListByPage(int page,int limit){

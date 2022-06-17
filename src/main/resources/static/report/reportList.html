@@ -101,12 +101,8 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
     ,cols: [[ //表头
       {type: 'checkbox', fixed: 'left'}
       ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-      ,{field: 'reportDate', title: '报告日期', width:80}
-      ,{field: 'reportDate', title: '姓名', width: 90, sort: true, totalRow: true}
-      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'reportDate', title: '姓名', width: 120, sort: true, totalRow: true}
-      ,{field: 'reportDate', title: '密码', width: 90, sort: true, totalRow: true}
+      ,{field: 'reportDate', title: '报告日期', width:120}
+      ,{field: 'sqkm', title: 'sqkm', width:80, sort: true, totalRow: true}
       ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
     ]]
   });
@@ -241,9 +237,9 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
   });
   
   //底部信息
-  var footerTpl = lay('#footer')[0].innerHTML;
-  lay('#footer').html(layui.laytpl(footerTpl).render({}))
-  .removeClass('layui-hide');
+  //var footerTpl = lay('#footer')[0].innerHTML;
+  //lay('#footer').html(layui.laytpl(footerTpl).render({}))
+  //.removeClass('layui-hide');
 });
 </script>
 </body>

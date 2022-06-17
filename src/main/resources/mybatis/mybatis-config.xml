@@ -8,7 +8,7 @@
     </settings>
     <plugins>
         <plugin interceptor="com.bgp.report.interceptor.PageInterceptor">
-	        <property name="test" value="htsc dangkei present"/>
+	        <property name="test" value="bgp present"/>
         </plugin>
     </plugins>
 </configuration>
