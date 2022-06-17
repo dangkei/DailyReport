@@ -25,7 +25,8 @@ public class DailyReportService {
 	public DataTable getReportListByPage(int page,int limit){
 		DataTable table = new DataTable();
 		table.setCount(reportMapper.count(null));
-		table.setData(reportMapper.getReportListByPage(page, limit).toArray());
+		Object[] data = reportMapper.getReportListByPage(page, limit).toArray();
+		table.setData(data);
 		return table;
 	}
 }

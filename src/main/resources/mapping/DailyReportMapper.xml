@@ -4,7 +4,7 @@
  
     <resultMap id="BaseResultMap" type="com.bgp.report.entity.DailyReport">
         <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="report_date" jdbcType="VARCHAR" property="reportDate" />
+        <result column="report_date" jdbcType="TIMESTAMP" property="reportDate" />
         <result column="sqkm" jdbcType="VARCHAR" property="sqkm" />
         <result column="sqkmWeek" jdbcType="VARCHAR" property="sqkmWeek" />
     </resultMap>
