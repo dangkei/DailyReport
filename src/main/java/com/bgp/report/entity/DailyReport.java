@@ -13,6 +13,9 @@ import com.bgp.report.annotation.Table;
 @Table("tb_DailyReport")
 public class DailyReport {
 	
+	@Column("id")
+	private long id;
+	
 	@Column("report_date")
 	private String reportDate;
 	

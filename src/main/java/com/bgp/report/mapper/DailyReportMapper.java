@@ -9,6 +9,8 @@ import com.bgp.report.entity.DailyReport;
 @Repository
 public interface DailyReportMapper {
 
+	 int insert(DailyReport report);
+	
 	 List<DailyReport>  getReportList();
 	
 	 List<DailyReport>  getReportListByPage(int page, int limit);
