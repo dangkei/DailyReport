@@ -10,6 +10,11 @@ import com.bgp.report.entity.DailyReport;
 public interface DailyReportMapper {
 
 	 int insert(DailyReport report);
+	 
+	 int deleteBatch(String ids);
+	 
+	 
+	 DailyReport selectOne(int id);
 	
 	 int count(DailyReport report);
 	 
@@ -17,5 +22,5 @@ public interface DailyReportMapper {
 	
 	 List<DailyReport>  getReportListByPage(int page, int limit);
 	 
-	 int deleteBatch(String ids);
+	 
 }

@@ -21,6 +21,7 @@
 <div class="layui-form">
 <form class="layui-form layui-form-pane" action="" lay-filter="reportForm">
 	<div class="layui-form-item">
+	<input type="hided" name="reportDate" id="reportDate" autocomplete="off" class="layui-input">
     <div class="layui-inline">
       <label class="layui-form-label">报告日期</label>
       <div class="layui-input-block">
@@ -92,9 +93,9 @@
   </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <!--<button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>
-      <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-getval">取值</button>-->
-      <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <!--<button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>-->
+      <button type="button" style="display:none" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">保存</button>
+      <button type="submit" class="layui-btn" lay-submit="" id="LAY-component-form-submit" lay-filter="demo1">录入</button>
     </div>
   </div>
 </form>
@@ -193,6 +194,34 @@
     alert(JSON.stringify(data));
   });
   
+  var getReportData =  function(id){
+	  var url= "/report/selectOne";
+	  var obj={};
+	  obj.id = id;
+		//layer.msg(obj.info);
+		debugger
+		$.post(url,obj,function(data){
+			alert(JSON2.stringify(data));
+			return data;
+		});
+		return false;
+  }
+  
+  debugger
+  var action = getQueryString("action");
+  var id = getQueryString("id");
+  if(action){
+	  if(action=="edit"){
+		  $("#LAY-component-form-setval").show();
+		  $("#LAY-component-form-submit").hide();
+		  var report = getReportData(id);
+		  console.log(report);
+	  }
+  }else{
+	  
+  }
+  
+
 });
 </script>
 

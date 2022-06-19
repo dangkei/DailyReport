@@ -22,6 +22,13 @@
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
 </script>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+    <!--<button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>-->
+  </div>
+</script>
  
 <div class="layui-tab layui-tab-brief" lay-filter="userTable">
   <div class="layui-tab-content">
@@ -78,9 +85,9 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
 	    elem: '#reportTbl'
 	    ,height:  540
 	    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
-	    ,title: '用户表'
+	    ,title: '日报'
 	    ,page: true //开启分页
-	    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+	    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 	    ,totalRow: false //开启合计行
 	    ,cols: [[ //表头
 	      {type: 'checkbox', fixed: 'left'}
@@ -123,32 +130,17 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
         			freshTable();
         		}
         	  //,btn: ['确定录入', '关闭']
-        ,yes: function(index, layero){
-          //按钮【按钮一】的回调
-          	debugger
-        	//alert(1);
-          	form.on('submit(demo1)', function(data){
-          		alert(JSON2.stringify(data.field));
-          	});
-          
-          	layer.closeAll();
-        }
-        ,btn2: function(index, layero){
-          //按钮【按钮二】的回调
-          //alert(2);
-          return true; //开启该代码可禁止点击该按钮关闭
-        }
         	});
       break;
       case 'update':
-        if(data.length === 0){
-          layer.msg('请选择一行');
-        } else if(data.length > 1){
-          layer.msg('只能同时编辑一个');
-        } else {
-          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
-        }
-      break;
+          if(data.length === 0){
+            layer.msg('请选择一行');
+          } else if(data.length > 1){
+            layer.msg('只能同时编辑一个');
+          } else {
+            layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+          }
+        break;
       case 'delete':
     	// layer.msg(JSON2.stringify(data));
         if(data.length === 0){
@@ -210,6 +202,7 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
               //向服务端发送删除指令
             });
           } else if(menudata.id === 'edit'){
+        	  openForm("/report/reportForm.html?open&action=edit&id="+data.id);
             layer.msg('编辑操作，当前行 ID:'+ data.id);
           }
         }
@@ -275,7 +268,7 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
 	    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
 	    ,title: '用户表'
 	    ,page: true //开启分页
-	    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+	    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 	    ,totalRow: false //开启合计行
 	    ,cols: [[ //表头
 	      {type: 'checkbox', fixed: 'left'}
@@ -293,6 +286,23 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
 	      ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
 	    ]]
 	  });
+  }
+  var openForm = function(url){
+      layer.open({
+       	  offset: 't'
+    	  ,type: 2
+    	  ,title: ''
+    	  ,shadeClose: true
+    	  ,shade: false
+    	  ,maxmin: false//开启最大化最小化按钮
+    	  ,area: ['680px', '520px']
+    	  ,content: url //'/report/reportForm.html'
+    	  ,end : function() {
+    			//关闭弹框后触发
+    			freshTable();
+    		}
+    	  //,btn: ['确定录入', '关闭']
+    	});
   }
 });
 </script>

@@ -18,6 +18,16 @@ public class DailyReportService {
 		return reportMapper.insert(report);
 	}
 	
+	public int deleteBatch(String ids) {
+		StringBuilder sb = new StringBuilder(ids);
+		sb.deleteCharAt(0).deleteCharAt(sb.length()-1);
+		return reportMapper.deleteBatch(sb.toString());
+	}
+	
+	public DailyReport selectOne(int id) {
+		return reportMapper.selectOne(id);
+	}
+	
 	public List<DailyReport> getReportList(int page,int limit){
 		return reportMapper.getReportList();
 	}
@@ -30,9 +40,5 @@ public class DailyReportService {
 		return table;
 	}
 	
-	public int deleteBatch(String ids) {
-		StringBuilder sb = new StringBuilder(ids);
-		sb.deleteCharAt(0).deleteCharAt(sb.length()-1);
-		return reportMapper.deleteBatch(sb.toString());
-	}
+
 }

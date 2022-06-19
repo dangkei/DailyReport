@@ -23,15 +23,22 @@ public class ReportController {
 	public String createReport(String info) {
 		DailyReport report = new DailyReport();
 		report = JSONObject.parseObject(info,report.getClass());
-		int i = reportService.insert(report);
+		reportService.insert(report);
 		return "ok";
 	}
 	@RequestMapping("/report/deleteBatch")
 	public String deleteReportBatch(String ids) {
 		//String[] arrIds = ids.split(",");
 		
-		int i = reportService.deleteBatch(ids);
+		reportService.deleteBatch(ids);
 		return "ok";
+	}
+	
+	@RequestMapping("/report/selectOne")
+	public DailyReport selectOne(int id) {
+		//String[] arrIds = ids.split(",");
+		DailyReport data = reportService.selectOne(id);
+		return data;
 	}
 	
 	@RequestMapping("/report/getReportListByPage")

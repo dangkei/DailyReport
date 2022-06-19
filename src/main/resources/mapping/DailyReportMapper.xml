@@ -30,9 +30,17 @@
     -->
     <insert id="insert">
     	INSERT INTO tb_DailyReport (<include refid="columns"></include>)
-    VALUES (#{reportDate}, #{sqkm}, #{sqkmWeek}, #{dtTime}, #{paySB}, #{noPaySB}, #{captureTime}, #{dailyIn}, #{weeklyIn}, #{remark})
+    VALUES (null,#{reportDate}, #{sqkm}, #{sqkmWeek}, #{dtTime}, #{paySB}, #{noPaySB}, #{captureTime}, #{dailyIn}, #{weeklyIn}, #{remark})
     </insert>
      
+    <delete id="deleteBatch" >
+    	delete from tb_DailyReport where id in (${value})
+    </delete>
+    
+    <select id="selectOne" parameterType="int"  resultMap="BaseResultMap" >
+    	select * from tb_DailyReport where id = #{id}
+    </select>
+	
 	<select id="getReportList" resultType="com.bgp.report.entity.DailyReport">
         select <include refid="columns"></include> from tb_DailyReport 
     </select>
@@ -49,15 +57,12 @@
     </where>
     </select>
     
-    <select id="getReportListByPage" parameterType="java.util.Map" resultMap="BaseResultMap" resultType="com.bgp.report.entity.DailyReport">
+    <select id="getReportListByPage" parameterType="java.util.Map" resultMap="BaseResultMap" >
         select * from tb_DailyReport 
     </select>
     
-    <delete id="deleteBatch" 	>
-    	delete from tb_DailyReport where id in (${value})
+
     
-    </delete>
-    
-    <sql id="columns">report_date, sqkm, sqkm_week, dt_time,pay_sb,nopay_sb,capture_time,daily_in,weekly_in,remark</sql>
+    <sql id="columns">id, report_date, sqkm, sqkm_week, dt_time,pay_sb,nopay_sb,capture_time,daily_in,weekly_in,remark</sql>
     
 </mapper>

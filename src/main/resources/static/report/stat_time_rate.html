@@ -1,14 +1,13 @@
 <!--
-	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=bar-background&lang=js&useDirtyRect=1&decal=1&code=PYBwLglsB2AEC8sDeAoWsAeBBDEDOAXMmurGAJ4gCmRA5AMYCGYVA5sAE7m0A0J6AE2aMiAbVoBZGL1i0AKgFcqM2gHUqAlXIAWClQDEOEFQGVmphdFoBdEgF8-6cjnxFUpMpRqyAbowA2SrT2jrB4VEZUhLCi_MQegsJiAIwATAAMPLAZmbDJAKy5ABy5AOy5yckVAMzp1qEeFNR0AEaMHLxx6HjawADuAEKM9ADWrBzAlgJEYBxKDaRto-OT0AImFP7e7gno9MD-nHQcrG0AFJUVJVnJ17DpAHSpAJTBu3ZxH-i2dgDcQA
-	请注意，该图表不是 Apache ECharts 官方示例，而是由用户代码生成的。请注意鉴别其内容。
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=pie-legend
 -->
 <!DOCTYPE html>
-<html lang="zh-CN" style="height: 90%">
+<html lang="zh-CN" style="height: 100%">
 <head>
   <meta charset="utf-8">
 </head>
-<body style="height: 90%; margin: 0">
-  <div id="container" style="height: 90%"></div>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
 
   
   <script type="text/javascript" src="/js/echart/echarts.min.js"></script>
@@ -34,31 +33,76 @@
     var dom = document.getElementById('container');
     var myChart = echarts.init(dom, null, {
       renderer: 'canvas',
-      useDirtyRect: true
+      useDirtyRect: false
     });
     var app = {};
     
     var option;
 
-    option = {
-  xAxis: {
-    type: 'category',
-    data: ['2022-06-18', '2022-06-18', '2022-06-18', '2022-06-18', '2022-06-18', '2022-06-18', '2022-06-18']
+    const data = genData(4);
+option = {
+  title: {
+    text: '苏里南Block7 时间占比',
+    subtext: '纯属虚构',
+    left: 'center'
   },
-  yAxis: {
-    type: 'value'
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b} : {c} ({d}%)'
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    right: 10,
+    top: 20,
+    bottom: 20,
+    data: data.legendData
   },
   series: [
     {
-      data: [147.745, 47.745, 747.745, 47.745, 847.745, 41.745, 97.745],
-      type: 'bar',
-      showBackground: true,
-      backgroundStyle: {
-        color: 'rgba(110, 180, 180, 0.2)'
+      name: '百分比',
+      type: 'pie',
+      radius: '55%',
+      center: ['40%', '50%'],
+      data: data.seriesData,
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(255, 222, 21, 99)'
+        }
       }
     }
   ]
 };
+function genData(count) {
+  // prettier-ignore
+  const nameList = [
+        'DT时间', '付费SB', '非付费SB', '采集时间'
+    ];
+  const legendData = ['DT时间', '付费SB', '非付费SB', '采集时间'];
+  const seriesData = [];
+  for (var i = 0; i < count; i++) {
+    var name = legendData[i];
+    //legendData.push(name);
+    seriesData.push({
+      name: name,
+      value: Math.round(Math.random() * 100000)
+    });
+  }
+  return {
+    legendData: legendData,
+    seriesData: seriesData
+  };
+  function makeWord(max, min) {
+    const nameLen = Math.ceil(Math.random() * max + min);
+    const name = [];
+    for (var i = 0; i < nameLen; i++) {
+      name.push(nameList[Math.round(Math.random() * nameList.length - 1)]);
+    }
+    return name.join('');
+  }
+}
 
     if (option && typeof option === 'object') {
       myChart.setOption(option);
