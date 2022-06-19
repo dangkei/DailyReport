@@ -3,6 +3,11 @@
  */
 package com.bgp.report.entity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 import com.bgp.report.annotation.Column;
 import com.bgp.report.annotation.Table;
 
@@ -17,31 +22,33 @@ public class DailyReport {
 	private long id;
 	
 	@Column("report_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String reportDate;
 	
 	@Column("sqkm")
-	private float sqkm;
+	//@NumberFormat()
+	private String sqkm;
 	
 	@Column("sqkm_week")
-	private float sqkmWeek;
+	private String sqkmWeek;
 	
 	@Column("dt_time")
-	private float dtTime;
+	private String dtTime;
 	
 	@Column("pay_sb")
-	private float paySB;
+	private String paySB;
 	
 	@Column("nopay_sb")
-	private float noPaySB;
+	private String noPaySB;
 	
 	@Column("capture_time")
-	private float captureTime;
+	private String captureTime;
 	
 	@Column("daily_in")
-	private float dailyIn;
+	private String dailyIn;
 	
 	@Column("weekly_in")
-	private float weeklyIn;
+	private String weeklyIn;
 	
 	@Column("remark")
 	private String remark;
@@ -77,112 +84,112 @@ public class DailyReport {
 	/**
 	 * @return the sqkm
 	 */
-	public float getSqkm() {
+	public String getSqkm() {
 		return sqkm;
 	}
 
 	/**
 	 * @param sqkm the sqkm to set
 	 */
-	public void setSqkm(float sqkm) {
+	public void setSqkm(String sqkm) {
 		this.sqkm = sqkm;
 	}
 
 	/**
 	 * @return the sqkmWeek
 	 */
-	public float getSqkmWeek() {
+	public String getSqkmWeek() {
 		return sqkmWeek;
 	}
 
 	/**
 	 * @param sqkmWeek the sqkmWeek to set
 	 */
-	public void setSqkmWeek(float sqkmWeek) {
+	public void setSqkmWeek(String sqkmWeek) {
 		this.sqkmWeek = sqkmWeek;
 	}
 
 	/**
 	 * @return the dtTime
 	 */
-	public float getDtTime() {
+	public String getDtTime() {
 		return dtTime;
 	}
 
 	/**
 	 * @param dtTime the dtTime to set
 	 */
-	public void setDtTime(float dtTime) {
+	public void setDtTime(String dtTime) {
 		this.dtTime = dtTime;
 	}
 
 	/**
 	 * @return the paySB
 	 */
-	public float getPaySB() {
+	public String getPaySB() {
 		return paySB;
 	}
 
 	/**
 	 * @param paySB the paySB to set
 	 */
-	public void setPaySB(float paySB) {
+	public void setPaySB(String paySB) {
 		this.paySB = paySB;
 	}
 
 	/**
 	 * @return the noPaySB
 	 */
-	public float getNoPaySB() {
+	public String getNoPaySB() {
 		return noPaySB;
 	}
 
 	/**
 	 * @param noPaySB the noPaySB to set
 	 */
-	public void setNoPaySB(float noPaySB) {
+	public void setNoPaySB(String noPaySB) {
 		this.noPaySB = noPaySB;
 	}
 
 	/**
 	 * @return the captureTime
 	 */
-	public float getCaptureTime() {
+	public String getCaptureTime() {
 		return captureTime;
 	}
 
 	/**
 	 * @param captureTime the captureTime to set
 	 */
-	public void setCaptureTime(float captureTime) {
+	public void setCaptureTime(String captureTime) {
 		this.captureTime = captureTime;
 	}
 
 	/**
 	 * @return the dailyIn
 	 */
-	public float getDailyIn() {
+	public String getDailyIn() {
 		return dailyIn;
 	}
 
 	/**
 	 * @param dailyIn the dailyIn to set
 	 */
-	public void setDailyIn(float dailyIn) {
+	public void setDailyIn(String dailyIn) {
 		this.dailyIn = dailyIn;
 	}
 
 	/**
 	 * @return the weeklyIn
 	 */
-	public float getWeeklyIn() {
+	public String getWeeklyIn() {
 		return weeklyIn;
 	}
 
 	/**
 	 * @param weeklyIn the weeklyIn to set
 	 */
-	public void setWeeklyIn(float weeklyIn) {
+	public void setWeeklyIn(String weeklyIn) {
 		this.weeklyIn = weeklyIn;
 	}
 

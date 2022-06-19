@@ -29,4 +29,10 @@ public class DailyReportService {
 		table.setData(data);
 		return table;
 	}
+	
+	public int deleteBatch(String ids) {
+		StringBuilder sb = new StringBuilder(ids);
+		sb.deleteCharAt(0).deleteCharAt(sb.length()-1);
+		return reportMapper.deleteBatch(sb.toString());
+	}
 }

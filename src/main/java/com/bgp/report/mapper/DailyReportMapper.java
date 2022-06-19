@@ -16,4 +16,6 @@ public interface DailyReportMapper {
 	 List<DailyReport>  getReportList();
 	
 	 List<DailyReport>  getReportListByPage(int page, int limit);
+	 
+	 int deleteBatch(String ids);
 }

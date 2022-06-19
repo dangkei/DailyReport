@@ -4,11 +4,30 @@
  
     <resultMap id="BaseResultMap" type="com.bgp.report.entity.DailyReport">
         <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="report_date" jdbcType="TIMESTAMP" property="reportDate" />
+        <result column="report_date" jdbcType="VARCHAR" property="reportDate" />
         <result column="sqkm" jdbcType="VARCHAR" property="sqkm" />
-        <result column="sqkmWeek" jdbcType="VARCHAR" property="sqkmWeek" />
+        <result column="sqkm_week" jdbcType="VARCHAR"  property="sqkmWeek" />
+        <result column="dt_time" jdbcType="VARCHAR" property="dtTime" />
+        <result column="pay_sb" jdbcType="VARCHAR" property="paySB" />
+        <result column="nopay_sb" jdbcType="VARCHAR" property="noPaySB" />
+        <result column="capture_time" jdbcType="VARCHAR" property="captureTime" />
+        <result column="daily_in" jdbcType="VARCHAR" property="dailyIn" />
+        <result column="weekly_in" jdbcType="VARCHAR" property="weeklyIn" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
-    
+    <!--
+      select:标签名字:  CRUD的时候对应的名字
+      id:这个语句的唯一标识;   【必须和接口的方法名字一样】;
+      parameterType:传入参数类型
+      resultType:返回值类型
+      #{id}:参数的接收
+      collection=""  遍历集合
+      index=""  遍历时候的索引
+      item=""   每此遍历得到的对象
+      open=""   以什么开始
+      close=""  以什么结束
+      separator="" 以什么作为分割符
+    -->
     <insert id="insert">
     	INSERT INTO tb_DailyReport (<include refid="columns"></include>)
     VALUES (#{reportDate}, #{sqkm}, #{sqkmWeek}, #{dtTime}, #{paySB}, #{noPaySB}, #{captureTime}, #{dailyIn}, #{weeklyIn}, #{remark})
@@ -30,9 +49,14 @@
     </where>
     </select>
     
-    <select id="getReportListByPage" parameterType="java.util.Map"  resultType="com.bgp.report.entity.DailyReport">
+    <select id="getReportListByPage" parameterType="java.util.Map" resultMap="BaseResultMap" resultType="com.bgp.report.entity.DailyReport">
         select * from tb_DailyReport 
     </select>
+    
+    <delete id="deleteBatch" 	>
+    	delete from tb_DailyReport where id in (${value})
+    
+    </delete>
     
     <sql id="columns">report_date, sqkm, sqkm_week, dt_time,pay_sb,nopay_sb,capture_time,daily_in,weekly_in,remark</sql>
     

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>日报查询</title>
   <link href="/js/layui/css/layui.css" rel="stylesheet">
+  <script type="text/javascript" src="/js/jquery/jquery.js"></script>
+  <script type="text/javascript" src="/js/json2.js"></script>
+  <script type="text/javascript" src="/js/util.js"></script>
   <style>
     body{padding: 6px 16px;}
     .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
@@ -21,13 +24,6 @@
 </script>
  
 <div class="layui-tab layui-tab-brief" lay-filter="userTable">
-  <ul class="layui-tab-title">
-    <li class="layui-this">演示说明</li>
-    <li>日期</li>
-    <li>分页</li>
-    <li>上传</li>
-    <li>滑块</li>
-  </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
       <div class="layui-carousel" id="test1">
@@ -42,17 +38,6 @@
     </div>
     <div class="layui-tab-item">
       <div id="laydateDemo"></div>
-    </div>
-
-    <div class="layui-tab-item">
-      <div class="layui-upload-drag" id="uploadDemo">
-        <i class="layui-icon"></i>
-        <p>点击上传，或将文件拖拽到此处</p>
-        <div class="layui-hide" id="uploadDemoView">
-          <hr>
-          <img src="" alt="上传成功后渲染" style="max-width: 100%">
-        </div>
-      </div>
     </div>
     <div class="layui-tab-item">
       <div id="sliderDemo" style="margin: 52px 18px;"></div>
@@ -89,37 +74,33 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
     });
   });
   
-  //执行一个 table 实例
-  table.render({
-    elem: '#reportTbl'
-    ,height:  540
-    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
-    ,title: '用户表'
-    ,page: true //开启分页
-    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-    ,totalRow: false //开启合计行
-    ,cols: [[ //表头
-      {type: 'checkbox', fixed: 'left'}
-      ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-      ,{field: 'reportDate', title: '报告日期', width:120}
-      ,{field: 'sqkm', title: 'sqkm', width:80, sort: true, totalRow: true}
-      ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
-    ]]
-  });
+  var objTable = table.render({
+	    elem: '#reportTbl'
+	    ,height:  540
+	    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
+	    ,title: '用户表'
+	    ,page: true //开启分页
+	    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+	    ,totalRow: false //开启合计行
+	    ,cols: [[ //表头
+	      {type: 'checkbox', fixed: 'left'}
+	      ,{field: 'id', title: 'ID', width:50, sort: false, fixed: 'left', totalRowText: '合计：'}
+	      ,{field: 'reportDate', title: '报告日期', width:120}
+	      ,{field: 'sqkm', title: '产量', width:80, sort: true, totalRow: true}
+	      ,{field: 'sqkmWeek', title: '周产量', width:80, totalRow: true}
+	      ,{field: 'dtTime', title: 'DT时间', width:80, totalRow: true}
+	      ,{field: 'paySB', title: '付费SB', width:80, totalRow: true}
+	      ,{field: 'noPaySB', title: '非付费SB', width:95, totalRow: true}
+	      ,{field: 'captureTime', title: '采集时间', width:90, totalRow: true}
+	      ,{field: 'dailyIn', title: '日入', width:80, totalRow: true}
+	      ,{field: 'weeklyIn', title: '周入', width:80, totalRow: true}
+	      ,{field: 'remark', title: '备注', width:180, totalRow: true}
+	      ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
+	    ]]
+	  });
+  setInterval(function(){
+	  freshTable()}, 30000);
   
-  //分页
-  /*laypage.render({
-    elem: 'userPaging' //分页容器的id
-    ,count: 1000 //数据总数
-    ,limit: 10 //每页显示的数据条数
-    ,skin: '#1E9FFF' //自定义选中色值
-    //,layout: ['prev', 'page', 'next', 'count', 'limit', 'refresh', 'skip'] //自定义排版
-    ,jump: function(obj, first){
-      if(!first){
-        layer.msg('第'+ obj.curr +'页', {offset: 'b'});
-      }
-    }
-  });*/
   
   //头工具栏事件
   table.on('toolbar(test)', function(obj){
@@ -127,7 +108,37 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
     ,data = checkStatus.data; //获取选中的数据
     switch(obj.event){
       case 'add':
-        layer.msg('添加');
+        //layer.msg('添加');
+        layer.open({
+	       	  offset: 't'
+        	  ,type: 2
+        	  ,title: ''
+        	  ,shadeClose: true
+        	  ,shade: false
+        	  ,maxmin: false//开启最大化最小化按钮
+        	  ,area: ['680px', '520px']
+        	  ,content: '/report/reportForm.html'
+        	  ,end : function() {
+        			//关闭弹框后触发
+        			freshTable();
+        		}
+        	  //,btn: ['确定录入', '关闭']
+        ,yes: function(index, layero){
+          //按钮【按钮一】的回调
+          	debugger
+        	//alert(1);
+          	form.on('submit(demo1)', function(data){
+          		alert(JSON2.stringify(data.field));
+          	});
+          
+          	layer.closeAll();
+        }
+        ,btn2: function(index, layero){
+          //按钮【按钮二】的回调
+          //alert(2);
+          return true; //开启该代码可禁止点击该按钮关闭
+        }
+        	});
       break;
       case 'update':
         if(data.length === 0){
@@ -139,10 +150,35 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
         }
       break;
       case 'delete':
+    	// layer.msg(JSON2.stringify(data));
         if(data.length === 0){
           layer.msg('请选择一行');
         } else {
-          layer.msg('删除');
+        	var ids=[];
+        	for(var i=0;i<data.length;i++){
+        		ids.push(data[i].id);
+        	}
+    		var url= "/report/deleteBatch";
+    		var obj={};
+    		obj.ids = JSON2.stringify(ids);
+    		$.post(url,obj,function(msg){
+    			if(msg=="ok"){
+    				layer.confirm('删除成功！', {
+    					  btn: ['确认'] //按钮
+    					}, function(){
+    						layer.closeAll();
+    						freshTable();
+    						return true;
+    					});
+    			}else{
+    				debugger
+    				layer.confirm('操作失败！', {
+    					  btn: ['确认'] //按钮
+    					}, function(){
+    						layer.closeAll();
+    					});
+    			}
+    		});
         }
       break;
     };
@@ -182,16 +218,7 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
       })
     }
   });
-  
-  //执行一个轮播实例
-  carousel.render({
-    elem: '#test1'
-    ,width: '100%' //设置容器宽度
-    ,height: 200
-    ,arrow: 'none' //不显示箭头
-    ,anim: 'fade' //切换动画方式
-  });
-  
+ 
   //将日期直接嵌套在指定容器中
   var dateIns = laydate.render({
     elem: '#laydateDemo'
@@ -240,6 +267,33 @@ layui.use(function(){ //亦可加载特定模块：layui.use(['layer','laydate']
   //var footerTpl = lay('#footer')[0].innerHTML;
   //lay('#footer').html(layui.laytpl(footerTpl).render({}))
   //.removeClass('layui-hide');
+  
+  var freshTable=function(){
+  		objTable.reload({
+	    elem: '#reportTbl'
+	    ,height:  540
+	    ,url: '/report/getReportListByPage' //数据接口（此处为静态数据，仅作演示）
+	    ,title: '用户表'
+	    ,page: true //开启分页
+	    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+	    ,totalRow: false //开启合计行
+	    ,cols: [[ //表头
+	      {type: 'checkbox', fixed: 'left'}
+	      ,{field: 'id', title: 'ID', width:50, sort: false, fixed: 'left', totalRowText: '合计：'}
+	      ,{field: 'reportDate', title: '报告日期', width:120}
+	      ,{field: 'sqkm', title: '产量', width:80, sort: true, totalRow: true}
+	      ,{field: 'sqkmWeek', title: '周产量', width:80, totalRow: true}
+	      ,{field: 'dtTime', title: 'DT时间', width:80, totalRow: true}
+	      ,{field: 'paySB', title: '付费SB', width:80, totalRow: true}
+	      ,{field: 'noPaySB', title: '非付费SB', width:95, totalRow: true}
+	      ,{field: 'captureTime', title: '采集时间', width:90, totalRow: true}
+	      ,{field: 'dailyIn', title: '日入', width:80, totalRow: true}
+	      ,{field: 'weeklyIn', title: '周入', width:80, totalRow: true}
+	      ,{field: 'remark', title: '备注', width:180, totalRow: true}
+	      ,{fixed: 'right', width: 150, align:'center', toolbar: '#barDemo'}
+	    ]]
+	  });
+  }
 });
 </script>
 </body>

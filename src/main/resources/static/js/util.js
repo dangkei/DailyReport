@@ -210,6 +210,12 @@ if(number){
 	return newtime;
 }
 
+var getFormatDay=function(date){
+	var year = date.getFullYear();
+	var month =(date.getMonth()+1).toString().padStart(2,'0');
+	var day = date.getDate().toString().padStart(2,'2');
+	return year+'-'+month+'-'+day;
+}
 
 function fBuildStrNotNull_S(s) {
 
