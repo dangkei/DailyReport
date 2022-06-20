@@ -21,7 +21,7 @@
 <div class="layui-form">
 <form class="layui-form layui-form-pane" action="" lay-filter="reportForm">
 	<div class="layui-form-item">
-	<input type="hided" name="reportDate" id="reportDate" autocomplete="off" class="layui-input">
+	<input type="hidden" name="reportDate" id="reportDate" autocomplete="off" class="layui-input">
     <div class="layui-inline">
       <label class="layui-form-label">报告日期</label>
       <div class="layui-input-block">
@@ -144,9 +144,9 @@
     	})*/
 		var url= "/report/create";
 		var obj={};
-		obj.info = JSON2.stringify(data.field);
+		obj.info = JSON.stringify(data.field);
 		//layer.msg(obj.info);
-		debugger
+		console.log(obj.info);
 		$.post(url,obj,function(msg){
 			if(msg=="ok"){
 				layer.confirm('录入成功！', {
@@ -171,9 +171,56 @@
     return false;
   });
  
-	//表单赋值
-  //layui.$('#LAY-component-form-setval').on('click', function(){
-	var date = new Date();
+  //});
+  //表单取值
+  layui.$('#LAY-component-form-getval').on('click', function(){
+    var data = form.val('example');
+    alert(JSON.stringify(data));
+  });
+  
+  var getReportData =  function(id,callback){
+	  var url= "/report/selectOne";
+	  console.log(callback);
+	  //alert(typeof(callback));
+	  var obj={};
+	  obj.id = id;
+	  $.post(url,obj,function(data){
+			if(typeof(callback)==Function){
+				callback('reportForm',data);
+			}
+			return data;
+	  });
+	  //return false;
+  }
+  var setReportData =  function(data,callback){
+	  var url= "/report/updateOne";
+	  //alert(typeof(callback));
+	  var obj={};
+	  obj.id = id;
+	  $.post(url,obj,function(data){
+			if(typeof(callback)==Function){
+				callback('reportForm',data);
+			}
+			return data;
+	  });
+	  //return false;
+  }
+  
+  var setFormData = function(formName,data){
+	form.val(formName,data);
+  }
+  
+  var action = getQueryString("action");
+  var id = getQueryString("id");
+  if(action){
+	  if(action=="edit"){
+		  $("#LAY-component-form-setval").show();
+		  $("#LAY-component-form-submit").hide();
+		  var report = getReportData(id,setFormData);
+	  }
+  }else{
+	//默认表单赋值
+  	var date = new Date();
 	var today = getFormatDay(date);
     form.val('reportForm', {
       "reportDate": today // "name": "value"
@@ -187,38 +234,6 @@
       ,"weeklyIn": 14.200
       ,"remark": "SB Debris 导致漏气"
     });
-  //});
-  //表单取值
-  layui.$('#LAY-component-form-getval').on('click', function(){
-    var data = form.val('example');
-    alert(JSON.stringify(data));
-  });
-  
-  var getReportData =  function(id){
-	  var url= "/report/selectOne";
-	  var obj={};
-	  obj.id = id;
-		//layer.msg(obj.info);
-		debugger
-		$.post(url,obj,function(data){
-			alert(JSON2.stringify(data));
-			return data;
-		});
-		return false;
-  }
-  
-  debugger
-  var action = getQueryString("action");
-  var id = getQueryString("id");
-  if(action){
-	  if(action=="edit"){
-		  $("#LAY-component-form-setval").show();
-		  $("#LAY-component-form-submit").hide();
-		  var report = getReportData(id);
-		  console.log(report);
-	  }
-  }else{
-	  
   }
   
 

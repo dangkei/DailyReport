@@ -13,6 +13,7 @@ public interface DailyReportMapper {
 	 
 	 int deleteBatch(String ids);
 	 
+	 int updateOne(DailyReport report);
 	 
 	 DailyReport selectOne(int id);
 	

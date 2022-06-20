@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.bgp.report.entity;
+package com.bgp.report.common;
 
 /**
  * @author Administrator
- * 返回layui table 数据结构
+ * 返回layui table 表格要求的数据结构
  */
 public class DataTable {
 	

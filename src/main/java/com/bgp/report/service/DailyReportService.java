@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bgp.report.common.DataTable;
 import com.bgp.report.entity.DailyReport;
-import com.bgp.report.entity.DataTable;
 import com.bgp.report.mapper.DailyReportMapper;
 
 @Service
@@ -22,6 +22,10 @@ public class DailyReportService {
 		StringBuilder sb = new StringBuilder(ids);
 		sb.deleteCharAt(0).deleteCharAt(sb.length()-1);
 		return reportMapper.deleteBatch(sb.toString());
+	}
+	
+	public int updateOne(DailyReport report) {
+		return reportMapper.updateOne(report);
 	}
 	
 	public DailyReport selectOne(int id) {

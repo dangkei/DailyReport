@@ -20,6 +20,7 @@
       id:这个语句的唯一标识;   【必须和接口的方法名字一样】;
       parameterType:传入参数类型
       resultType:返回值类型
+      resultMap: 返回值映射配置的id= 参数值
       #{id}:参数的接收
       collection=""  遍历集合
       index=""  遍历时候的索引
@@ -32,10 +33,14 @@
     	INSERT INTO tb_DailyReport (<include refid="columns"></include>)
     VALUES (null,#{reportDate}, #{sqkm}, #{sqkmWeek}, #{dtTime}, #{paySB}, #{noPaySB}, #{captureTime}, #{dailyIn}, #{weeklyIn}, #{remark})
     </insert>
-     
+    <!-- 删除操作 多条--> 
     <delete id="deleteBatch" >
     	delete from tb_DailyReport where id in (${value})
     </delete>
+    
+    <update id="updateOne" parameterType="com.bgp.report.entity.DailyReport" >
+    	update tb_DailyReport
+    </update>
     
     <select id="selectOne" parameterType="int"  resultMap="BaseResultMap" >
     	select * from tb_DailyReport where id = #{id}
@@ -60,8 +65,6 @@
     <select id="getReportListByPage" parameterType="java.util.Map" resultMap="BaseResultMap" >
         select * from tb_DailyReport 
     </select>
-    
-
     
     <sql id="columns">id, report_date, sqkm, sqkm_week, dt_time,pay_sb,nopay_sb,capture_time,daily_in,weekly_in,remark</sql>
     

@@ -53,21 +53,26 @@ public class PageInterceptor implements Interceptor {
 
 		// 原始的SQL语句
 		String sql = boundSql.getSql();
-
-		if(method.matches(".+ByPage$")){
+		
+		if(method.matches(".+ByPage$")){ //拦截分页读取数据 param1 page param2 每页条数
 			Map<?,?> params = (Map<?,?>)boundSql.getParameterObject();
 			int page = (int)params.get("param1");
 			int limit = (int)params.get("param2");
 			// 改造后带分页查询的SQL语句
 			String pageSql = sql + " limit " + (page-1)*limit + "," + limit;
 			metaObject.setValue("delegate.boundSql.sql", pageSql);
+		}else if(method.matches("updateOne")){  //更新单条记录
+			Object params = boundSql.getParameterObject();
+			//Object obj = params.get("param1");
+			Class<?>  cls = params.getClass();
+			System.out.println(params.getClass());
 		}
 		return invocation.proceed();
 	}
 
 	@Override
 	public Object plugin(Object target) {
-		System.out.println(this.test);
+		System.out.println("plugin"+this.test);
 		// 当目标类是StatementHandler类型时，才包装目标类，否者直接返回目标本身,减少目标被代理的次数
 		if (target instanceof StatementHandler) {
 			return Plugin.wrap(target, this);
